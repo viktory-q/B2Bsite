@@ -1,4 +1,4 @@
-/* Общие стили */
+
 * {
     margin: 0;
     padding: 0;
@@ -18,7 +18,7 @@ body {
     padding: 0 20px;
 }
 
-/* Шапка */
+
 .header {
     background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     color: white;
@@ -41,7 +41,7 @@ body {
     max-width: 800px;
 }
 
-/* Контролы */
+
 .controls {
     display: flex;
     justify-content: space-between;
@@ -80,7 +80,7 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-/* Сетка карточек */
+
 .cases-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -128,7 +128,7 @@ body {
     min-width: 140px;
 }
 
-/* Бейджи сложности */
+
 .complexity-badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -152,7 +152,7 @@ body {
     color: #991b1b;
 }
 
-/* Метрики */
+
 .metrics-tags {
     display: flex;
     flex-wrap: wrap;
@@ -169,7 +169,7 @@ body {
     font-weight: 500;
 }
 
-/* Инфо блок */
+
 .info-block {
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
     border-left: 4px solid #0ea5e9;
@@ -193,7 +193,7 @@ body {
     margin: 0;
 }
 
-/* Подвал */
+
 .footer {
     background: #1e293b;
     color: #cbd5e1;
@@ -225,7 +225,7 @@ body {
     color: #94a3b8;
 }
 
-/* Модальное окно */
+
 .modal {
     display: none;
     position: fixed;
@@ -296,7 +296,7 @@ body {
     color: #1e293b;
 }
 
-/* Фильтры */
+
 .filters-container {
     padding: 2rem;
     max-height: 60vh;
@@ -356,7 +356,7 @@ body {
     gap: 0.75rem;
 }
 
-/* Кнопки действий */
+
 .modal-actions {
     padding: 1.5rem 2rem;
     border-top: 1px solid #e2e8f0;
@@ -393,7 +393,7 @@ body {
     background: #e2e8f0;
 }
 
-/* Стили для нет результатов */
+
 .no-results {
     grid-column: 1 / -1;
     text-align: center;
@@ -418,7 +418,7 @@ body {
     color: #64748b;
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
     .header h1 {
         font-size: 2rem;
@@ -459,4 +459,5 @@ body {
     .metrics-grid {
         grid-template-columns: 1fr;
     }
+
 }
