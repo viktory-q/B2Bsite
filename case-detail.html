@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали кейса</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-chart-line"></i> Детали кейса</h1>
+            <p class="subtitle">Полная информация о реализации проекта</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="back-button">
+            <a href="index.html" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Назад к кейсам
+            </a>
+        </div>
+
+        <div id="caseDetail" class="case-detail">
+            <!-- Данные будут загружены через JavaScript -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">О компании</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика конфиденциальности</a>
+            </div>
+            <div class="footer-copy">
+                <p>© 2025 "Insomnia"</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cases.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const caseDetail = document.getElementById('caseDetail');
+            
+            // Получаем ID из URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const caseId = parseInt(urlParams.get('id'));
+            
+            // Находим кейс
+            const caseItem = caseStudies.find(c => c.id === caseId);
+            
+            if (!caseItem) {
+                caseDetail.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h2>Кейс не найден</h2>
+                        <p>Запрошенный кейс не существует или был удален.</p>
+                        <a href="index.html" class="btn-primary">Вернуться к списку кейсов</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Определяем класс для бейджа сложности
+            let complexityClass = 'complexity-medium';
+            if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
+            if (caseItem.complexity === 'Высокая') complexityClass = 'complexity-high';
+            
+            // Форматируем метрики
+            const metricsHTML = caseItem.metrics.map(metric => 
+                `<span class="metric-tag">${metric}</span>`
+            ).join('');
+            
+            // Форматируем результаты
+            let resultsHTML = '';
+            for (const [key, value] of Object.entries(caseItem.results)) {
+                let label = key;
+                switch(key) {
+                    case 'mql': label = 'MQL (Marketing Qualified Lead)'; break;
+                    case 'brandRecall': label = 'Узнаваемость бренда'; break;
+                    case 'sql': label = 'SQL (Sales Qualified Lead)'; break;
+                    case 'winRate': label = 'Win Rate'; break;
+                    case 'salesCycle': label = 'Цикл продаж'; break;
+                    case 'profit': label = 'Рост прибыли'; break;
+                    case 'brandAwareness': label = 'Осведомленность о бренде'; break;
+                    case 'ctr': label = 'CTR'; break;
+                    case 'ltv': label = 'LTV'; break;
+                    case 'nps': label = 'NPS'; break;
+                    case 'romi': label = 'ROI/ROMI'; break;
+                    case 'cpl': label = 'CPL'; break;
+                    case 'retention': label = 'Удержание клиентов'; break;
+                    case 'responseTime': label = 'Время ответа'; break;
+                    case 'automation': label = 'Автоматизация'; break;
+                    case 'costReduction': label = 'Сокращение затрат'; break;
+                    case 'timeSaved': label = 'Сэкономленное время'; break;
+                }
+                
+                let icon = 'fas fa-chart-line';
+                if (value.toString().includes('+')) icon = 'fas fa-arrow-up';
+                if (value.toString().includes('-')) icon = 'fas fa-arrow-down';
+                
+                resultsHTML += `
+                    <div class="result-item">
+                        <i class="${icon}"></i>
+                        <div>
+                            <strong>${label}</strong>
+                            <span class="result-value">${value}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Заполняем страницу данными
+            caseDetail.innerHTML = `
+                <div class="case-header">
+                    <h2>${caseItem.title}</h2>
+                    <div class="case-meta">
+                        <span class="company-badge">${caseItem.company}</span>
+                        <span class="complexity-badge ${complexityClass}">${caseItem.complexity}</span>
+                        <span class="result-badge">${caseItem.result}</span>
+                    </div>
+                </div>
+                
+                <div class="case-content">
+                    <div class="case-section">
+                        <h3><i class="fas fa-info-circle"></i> О проекте</h3>
+                        <p>${caseItem.fullDescription}</p>
+                    </div>
+                    
+                    <div class="case-section">
+                        <h3><i class="fas fa-tags"></i> Направление деятельности</h3>
+                        <div class="tags">
+                            ${caseItem.industry.map(ind => 
+                                `<span class="industry-tag">${ind}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="case-section">
+                        <h3><i class="fas fa-ruler"></i> Отслеживаемые метрики</h3>
+                        <div class="metrics-tags">
+                            ${metricsHTML}
+                        </div>
+                    </div>
+                    
+                    ${resultsHTML ? `
+                    <div class="case-section">
+                        <h3><i class="fas fa-trophy"></i> Достигнутые результаты</h3>
+                        <div class="results-grid">
+                            ${resultsHTML}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="case-section">
+                        <h3><i class="fas fa-lightbulb"></i> Ключевые выводы</h3>
+                        <ul class="insights">
+                            <li>Системный подход к внедрению изменений критически важен</li>
+                            <li>Интеграция отделов повышает эффективность работы</li>
+                            <li>Автоматизация рутинных процессов высвобождает время для стратегических задач</li>
+                            <li>Измерение метрик позволяет точно оценивать эффективность</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            // Добавляем стили для детальной страницы
+            const detailStyles = document.createElement('style');
+            detailStyles.textContent = `
+                .back-button {
+                    margin-bottom: 2rem;
+                }
+                
+                .case-detail {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 2rem;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                }
+                
+                .case-header {
+                    margin-bottom: 2rem;
+                    padding-bottom: 1.5rem;
+                    border-bottom: 2px solid #e2e8f0;
+                }
+                
+                .case-header h2 {
+                    font-size: 1.75rem;
+                    color: #1e293b;
+                    margin-bottom: 1rem;
+                }
+                
+                .case-meta {
+                    display: flex;
+                    gap: 1rem;
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+                
+                .company-badge {
+                    background: #dbeafe;
+                    color: #1e40af;
+                    padding: 0.5rem 1rem;
+                    border-radius: 6px;
+                    font-weight: 600;
+                }
+                
+                .result-badge {
+                    background: #dcfce7;
+                    color: #166534;
+                    padding: 0.5rem 1rem;
+                    border-radius: 6px;
+                    font-weight: 600;
+                }
+                
+                .case-section {
+                    margin-bottom: 2rem;
+                }
+                
+                .case-section:last-child {
+                    margin-bottom: 0;
+                }
+                
+                .case-section h3 {
+                    font-size: 1.25rem;
+                    color: #334155;
+                    margin-bottom: 1rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+                
+                .tags {
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                }
+                
+                .industry-tag {
+                    background: #f0f9ff;
+                    color: #0369a1;
+                    padding: 0.5rem 1rem;
+                    border-radius: 6px;
+                    font-weight: 500;
+                }
+                
+                .results-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 1rem;
+                }
+                
+                .result-item {
+                    background: #f8fafc;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    border-left: 4px solid #3b82f6;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 1rem;
+                }
+                
+                .result-item i {
+                    color: #3b82f6;
+                    font-size: 1.25rem;
+                    margin-top: 0.25rem;
+                }
+                
+                .result-value {
+                    display: block;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: #1e293b;
+                    margin-top: 0.25rem;
+                }
+                
+                .insights {
+                    list-style: none;
+                    padding-left: 0;
+                }
+                
+                .insights li {
+                    padding: 0.75rem 0;
+                    border-bottom: 1px solid #e2e8f0;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.75rem;
+                }
+                
+                .insights li:before {
+                    content: "✓";
+                    color: #10b981;
+                    font-weight: bold;
+                }
+                
+                .insights li:last-child {
+                    border-bottom: none;
+                }
+                
+                .error-message {
+                    text-align: center;
+                    padding: 4rem 2rem;
+                }
+                
+                .error-message i {
+                    font-size: 3rem;
+                    color: #f59e0b;
+                    margin-bottom: 1rem;
+                }
+                
+                .error-message h2 {
+                    color: #475569;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .error-message p {
+                    color: #64748b;
+                    margin-bottom: 2rem;
+                }
+                
+                @media (max-width: 768px) {
+                    .case-detail {
+                        padding: 1.5rem;
+                    }
+                    
+                    .results-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .case-header h2 {
+                        font-size: 1.5rem;
+                    }
+                }
+            `;
+            document.head.appendChild(detailStyles);
+        });
+    </script>
+</body>
+</html>

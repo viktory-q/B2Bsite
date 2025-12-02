@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Факторы успеха вашей B2B-рекламы</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-chart-line"></i> Факторы успеха вашей B2B-рекламы</h1>
+            <p class="subtitle">Систематизированные данные по работающим связкам, статистика и готовые шаблоны для внедрения.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Кнопка фильтров -->
+        <div class="controls">
+            <button id="openFilters" class="btn-filter">
+                <i class="fas fa-filter"></i> Добавить фильтр
+            </button>
+            <div class="stats">
+                <span id="casesCount">Загружаем кейсы...</span>
+            </div>
+        </div>
+
+        <!-- Контейнер для карточек -->
+        <div class="cases-grid" id="casesContainer">
+            <!-- Карточки будут вставлены через JavaScript -->
+        </div>
+
+        <!-- Инфо блок -->
+        <div class="info-block">
+            <p><i class="fas fa-lightbulb"></i> Используйте фильтры для поиска подходящих кейсов по вашему направлению и задачам.</p>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">О компании</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика конфиденциальности</a>
+            </div>
+            <div class="footer-copy">
+                <p>© 2025 "Insomnia"</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно фильтров -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-sliders-h"></i> Добавить фильтр</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="filters-container">
+                <div class="filter-section">
+                    <h3><i class="fas fa-industry"></i> Направление деятельности</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" name="industry" value="IT"> IT</label>
+                        <label><input type="checkbox" name="industry" value="Электронная коммерция"> Электронная коммерция</label>
+                        <label><input type="checkbox" name="industry" value="Логистика"> Логистика</label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3><i class="fas fa-chart-bar"></i> Результат</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" name="result" value="75% - 100%"> 75% - 100%</label>
+                        <label><input type="checkbox" name="result" value="50% - 75%"> 50% - 75%</label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3><i class="fas fa-cogs"></i> Сложность</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" name="complexity" value="Низкая"> Низкая</label>
+                        <label><input type="checkbox" name="complexity" value="Средняя"> Средняя</label>
+                        <label><input type="checkbox" name="complexity" value="Сложная"> Сложная</label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3><i class="fas fa-ruler"></i> Метрики</h3>
+                    <div class="filter-options metrics-grid">
+                        <label><input type="checkbox" name="metrics" value="MQL"> MQL</label>
+                        <label><input type="checkbox" name="metrics" value="Brand Recall"> Brand Recall</label>
+                        <label><input type="checkbox" name="metrics" value="SQL"> SQL</label>
+                        <label><input type="checkbox" name="metrics" value="CPM"> CPM</label>
+                        <label><input type="checkbox" name="metrics" value="CTR"> CTR</label>
+                        <label><input type="checkbox" name="metrics" value="CPL"> CPL</label>
+                        <label><input type="checkbox" name="metrics" value="LTV"> LTV</label>
+                        <label><input type="checkbox" name="metrics" value="NPS"> NPS</label>
+                        <label><input type="checkbox" name="metrics" value="Search Lift"> Search Lift</label>
+                        <label><input type="checkbox" name="metrics" value="Visit Lift"> Visit Lift</label>
+                        <label><input type="checkbox" name="metrics" value="Reach"> Reach</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="applyFilters" class="btn-primary">Применить</button>
+                <button id="resetFilters" class="btn-secondary">Сбросить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем скрипты -->
+    <script src="cases.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
