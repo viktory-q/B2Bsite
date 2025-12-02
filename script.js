@@ -1,6 +1,6 @@
-// Ждем загрузки DOM
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Элементы
+    
     const casesContainer = document.getElementById('casesContainer');
     const openFiltersBtn = document.getElementById('openFilters');
     const filterModal = document.getElementById('filterModal');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetFiltersBtn = document.getElementById('resetFilters');
     const casesCount = document.getElementById('casesCount');
     
-    // Текущие фильтры
+    
     let currentFilters = {
         industry: [],
         result: [],
@@ -17,17 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
         metrics: []
     };
     
-    // Инициализация
+    
     renderCases(caseStudies);
     updateCasesCount(caseStudies.length);
     
-    // Открытие модального окна
+    
     openFiltersBtn.addEventListener('click', () => {
         filterModal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     });
     
-    // Закрытие модального окна
+    
     closeModalBtn.addEventListener('click', closeModal);
     filterModal.addEventListener('click', (e) => {
         if (e.target === filterModal) {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Применение фильтров
+    
     applyFiltersBtn.addEventListener('click', () => {
         collectFilters();
         const filteredCases = filterCases();
@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
         closeModal();
     });
     
-    // Сброс фильтров
+    
     resetFiltersBtn.addEventListener('click', resetFilters);
     
-    // Функции
+    
     function closeModal() {
         filterModal.style.display = 'none';
         document.body.style.overflow = 'auto';
@@ -69,20 +69,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function filterCases() {
         return caseStudies.filter(caseItem => {
-            // Проверка по направлению деятельности
+            
             const industryMatch = currentFilters.industry.length === 0 || 
                                  currentFilters.industry.some(filter => 
                                      caseItem.industry.includes(filter));
             
-            // Проверка по результату
+            
             const resultMatch = currentFilters.result.length === 0 || 
                                currentFilters.result.includes(caseItem.result);
             
-            // Проверка по сложности
+            
             const complexityMatch = currentFilters.complexity.length === 0 || 
                                    currentFilters.complexity.includes(caseItem.complexity);
             
-            // Проверка по метрикам
+        
             const metricsMatch = currentFilters.metrics.length === 0 || 
                                currentFilters.metrics.some(filter => 
                                    caseItem.metrics.includes(filter));
@@ -92,12 +92,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function resetFilters() {
-        // Сброс чекбоксов
+        
         document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
             cb.checked = false;
         });
         
-        // Сброс фильтров
+        
         currentFilters = {
             industry: [],
             result: [],
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             metrics: []
         };
         
-        // Показать все кейсы
+        
         renderCases(caseStudies);
         updateCasesCount(caseStudies.length);
         closeModal();
@@ -135,17 +135,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'case-card';
         
-        // Определяем класс для бейджа сложности
+        
         let complexityClass = 'complexity-medium';
         if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
         if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
         
-        // Форматируем метрики
+        
         const metricsHTML = caseItem.metrics.map(metric => 
             `<span class="metric-tag">${metric}</span>`
         ).join('');
         
-        // Создаем HTML карточки
+        
         card.innerHTML = `
             <h3>${caseItem.title}</h3>
             <p><strong>Компания:</strong> ${caseItem.company}</p>
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </p>
         `;
         
-        // Добавляем клик для просмотра деталей
+        
         card.addEventListener('click', () => {
             window.location.href = `case-detail.html?id=${caseItem.id}`;
         });
@@ -174,4 +174,5 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCasesCount(count) {
         casesCount.textContent = `Найдено кейсов: ${count}`;
     }
+
 });
