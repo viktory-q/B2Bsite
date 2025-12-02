@@ -1,4 +1,3 @@
-
 const caseStudies = [
     {
         id: 1,
@@ -70,5 +69,4 @@ const caseStudies = [
             reach: "+120%"
         }
     }
-
 ];
