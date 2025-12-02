@@ -1,4 +1,4 @@
-// Массив с данными кейсов (твои 4 кейса)
+
 const caseStudies = [
     {
         id: 1,
@@ -70,4 +70,5 @@ const caseStudies = [
             reach: "+120%"
         }
     }
+
 ];
