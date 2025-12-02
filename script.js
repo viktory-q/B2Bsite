@@ -1,6 +1,4 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    
     const casesContainer = document.getElementById('casesContainer');
     const openFiltersBtn = document.getElementById('openFilters');
     const filterModal = document.getElementById('filterModal');
@@ -9,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetFiltersBtn = document.getElementById('resetFilters');
     const casesCount = document.getElementById('casesCount');
     
-    
     let currentFilters = {
         industry: [],
         result: [],
@@ -17,16 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
         metrics: []
     };
     
-    
     renderCases(caseStudies);
     updateCasesCount(caseStudies.length);
-    
     
     openFiltersBtn.addEventListener('click', () => {
         filterModal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     });
-    
     
     closeModalBtn.addEventListener('click', closeModal);
     filterModal.addEventListener('click', (e) => {
@@ -34,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
             closeModal();
         }
     });
-    
     
     applyFiltersBtn.addEventListener('click', () => {
         collectFilters();
@@ -44,9 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         closeModal();
     });
     
-    
     resetFiltersBtn.addEventListener('click', resetFilters);
-    
     
     function closeModal() {
         filterModal.style.display = 'none';
@@ -69,20 +60,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function filterCases() {
         return caseStudies.filter(caseItem => {
-            
             const industryMatch = currentFilters.industry.length === 0 || 
                                  currentFilters.industry.some(filter => 
                                      caseItem.industry.includes(filter));
             
-            
             const resultMatch = currentFilters.result.length === 0 || 
                                currentFilters.result.includes(caseItem.result);
-            
             
             const complexityMatch = currentFilters.complexity.length === 0 || 
                                    currentFilters.complexity.includes(caseItem.complexity);
             
-        
             const metricsMatch = currentFilters.metrics.length === 0 || 
                                currentFilters.metrics.some(filter => 
                                    caseItem.metrics.includes(filter));
@@ -92,11 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function resetFilters() {
-        
         document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
             cb.checked = false;
         });
-        
         
         currentFilters = {
             industry: [],
@@ -104,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
             complexity: [],
             metrics: []
         };
-        
         
         renderCases(caseStudies);
         updateCasesCount(caseStudies.length);
@@ -135,16 +119,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'case-card';
         
-        
         let complexityClass = 'complexity-medium';
         if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
         if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
         
-        
         const metricsHTML = caseItem.metrics.map(metric => 
             `<span class="metric-tag">${metric}</span>`
         ).join('');
-        
         
         card.innerHTML = `
             <h3>${caseItem.title}</h3>
@@ -163,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </p>
         `;
         
-        
         card.addEventListener('click', () => {
             window.location.href = `case-detail.html?id=${caseItem.id}`;
         });
@@ -174,5 +154,4 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCasesCount(count) {
         casesCount.textContent = `Найдено кейсов: ${count}`;
     }
-
 });
