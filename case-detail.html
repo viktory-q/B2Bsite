@@ -23,9 +23,7 @@
             </a>
         </div>
 
-        <div id="caseDetail" class="case-detail">
-            
-        </div>
+        <div id="caseDetail" class="case-detail"></div>
     </main>
 
     <footer class="footer">
@@ -46,10 +44,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const caseDetail = document.getElementById('caseDetail');
             
-            
             const urlParams = new URLSearchParams(window.location.search);
             const caseId = parseInt(urlParams.get('id'));
-            
             
             const caseItem = caseStudies.find(c => c.id === caseId);
             
@@ -58,23 +54,20 @@
                     <div class="error-message">
                         <i class="fas fa-exclamation-triangle"></i>
                         <h2>Кейс не найден</h2>
-                        <p>Запрошенный кейс не существует или был удален.</p>
+                        <p>Запрошенный кейс не существует.</p>
                         <a href="index.html" class="btn-primary">Вернуться к списку кейсов</a>
                     </div>
                 `;
                 return;
             }
             
-            
             let complexityClass = 'complexity-medium';
             if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
-            if (caseItem.complexity === 'Высокая') complexityClass = 'complexity-high';
-            
+            if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
             
             const metricsHTML = caseItem.metrics.map(metric => 
                 `<span class="metric-tag">${metric}</span>`
             ).join('');
-            
             
             let resultsHTML = '';
             for (const [key, value] of Object.entries(caseItem.results)) {
@@ -90,13 +83,12 @@
                     case 'ctr': label = 'CTR'; break;
                     case 'ltv': label = 'LTV'; break;
                     case 'nps': label = 'NPS'; break;
-                    case 'romi': label = 'ROI/ROMI'; break;
+                    case 'searchTraffic': label = 'Поисковый трафик'; break;
+                    case 'conversions': label = 'Конверсии'; break;
                     case 'cpl': label = 'CPL'; break;
-                    case 'retention': label = 'Удержание клиентов'; break;
-                    case 'responseTime': label = 'Время ответа'; break;
-                    case 'automation': label = 'Автоматизация'; break;
-                    case 'costReduction': label = 'Сокращение затрат'; break;
-                    case 'timeSaved': label = 'Сэкономленное время'; break;
+                    case 'roi': label = 'ROI'; break;
+                    case 'leads': label = 'Заявки'; break;
+                    case 'reach': label = 'Охват'; break;
                 }
                 
                 let icon = 'fas fa-chart-line';
@@ -114,7 +106,6 @@
                 `;
             }
             
-            q
             caseDetail.innerHTML = `
                 <div class="case-header">
                     <h2>${caseItem.title}</h2>
@@ -134,9 +125,7 @@
                     <div class="case-section">
                         <h3><i class="fas fa-tags"></i> Направление деятельности</h3>
                         <div class="tags">
-                            ${caseItem.industry.map(ind => 
-                                `<span class="industry-tag">${ind}</span>`
-                            ).join('')}
+                            <span class="industry-tag">${caseItem.industry[0]}</span>
                         </div>
                     </div>
                     
@@ -155,19 +144,8 @@
                         </div>
                     </div>
                     ` : ''}
-                    
-                    <div class="case-section">
-                        <h3><i class="fas fa-lightbulb"></i> Ключевые выводы</h3>
-                        <ul class="insights">
-                            <li>Системный подход к внедрению изменений критически важен</li>
-                            <li>Интеграция отделов повышает эффективность работы</li>
-                            <li>Автоматизация рутинных процессов высвобождает время для стратегических задач</li>
-                            <li>Измерение метрик позволяет точно оценивать эффективность</li>
-                        </ul>
-                    </div>
                 </div>
             `;
-            
             
             const detailStyles = document.createElement('style');
             detailStyles.textContent = `
@@ -237,7 +215,6 @@
                 .tags {
                     display: flex;
                     gap: 0.5rem;
-                    flex-wrap: wrap;
                 }
                 
                 .industry-tag {
@@ -276,29 +253,6 @@
                     font-weight: 700;
                     color: #1e293b;
                     margin-top: 0.25rem;
-                }
-                
-                .insights {
-                    list-style: none;
-                    padding-left: 0;
-                }
-                
-                .insights li {
-                    padding: 0.75rem 0;
-                    border-bottom: 1px solid #e2e8f0;
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 0.75rem;
-                }
-                
-                .insights li:before {
-                    content: "✓";
-                    color: #10b981;
-                    font-weight: bold;
-                }
-                
-                .insights li:last-child {
-                    border-bottom: none;
                 }
                 
                 .error-message {
@@ -340,5 +294,4 @@
         });
     </script>
 </body>
-
 </html>
