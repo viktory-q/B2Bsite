@@ -24,7 +24,7 @@
         </div>
 
         <div id="caseDetail" class="case-detail">
-            <!-- Данные будут загружены через JavaScript -->
+            
         </div>
     </main>
 
@@ -46,11 +46,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const caseDetail = document.getElementById('caseDetail');
             
-            // Получаем ID из URL
+            
             const urlParams = new URLSearchParams(window.location.search);
             const caseId = parseInt(urlParams.get('id'));
             
-            // Находим кейс
+            
             const caseItem = caseStudies.find(c => c.id === caseId);
             
             if (!caseItem) {
@@ -65,17 +65,17 @@
                 return;
             }
             
-            // Определяем класс для бейджа сложности
+            
             let complexityClass = 'complexity-medium';
             if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
             if (caseItem.complexity === 'Высокая') complexityClass = 'complexity-high';
             
-            // Форматируем метрики
+            
             const metricsHTML = caseItem.metrics.map(metric => 
                 `<span class="metric-tag">${metric}</span>`
             ).join('');
             
-            // Форматируем результаты
+            
             let resultsHTML = '';
             for (const [key, value] of Object.entries(caseItem.results)) {
                 let label = key;
@@ -114,7 +114,7 @@
                 `;
             }
             
-            // Заполняем страницу данными
+            q
             caseDetail.innerHTML = `
                 <div class="case-header">
                     <h2>${caseItem.title}</h2>
@@ -168,7 +168,7 @@
                 </div>
             `;
             
-            // Добавляем стили для детальной страницы
+            
             const detailStyles = document.createElement('style');
             detailStyles.textContent = `
                 .back-button {
@@ -340,4 +340,5 @@
         });
     </script>
 </body>
+
 </html>
