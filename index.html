@@ -9,14 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+   
     <header class="header">
         <div class="container">
-            <h1><i class="fas fa-chart-line"></i> Факторы успеха вашей B2B-рекламы</h1>
-            <p class="subtitle">Систематизированные данные по работающим связкам, статистика и готовые шаблоны для внедрения.</p>
+            <div class="header-logo">
+                <div class="logo-container">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M20 4C11.1634 4 4 11.1634 4 20C4 28.8366 11.1634 36 20 36C28.8366 36 36 28.8366 36 20C36 11.1634 28.8366 4 20 4ZM20 32C13.3726 32 8 26.6274 8 20C8 13.3726 13.3726 8 20 8C26.6274 8 32 13.3726 32 20C32 26.6274 26.6274 32 20 32Z" fill="url(#logoGradient)" opacity="0.3"/>
+                        <path d="M26 14C24.5 16.5 21 19 20 19C19 19 15.5 16.5 14 14C12 16 12 20 12 20C12 24.4183 15.5817 28 20 28C24.4183 28 28 24.4183 28 20C28 20 28 16 26 14Z" fill="url(#logoGradient)"/>
+                    </svg>
+                    <span class="logo-text">Insomnia</span>
+                </div>
+                <h1>Факторы успеха вашей B2B-рекламы</h1>
+                <p class="subtitle">Систематизированные данные по работающим связкам, статистика и готовые шаблоны для внедрения.</p>
+            </div>
         </div>
     </header>
 
     <main class="container">
+  
         <div class="controls">
             <button id="openFilters" class="btn-filter">
                 <i class="fas fa-filter"></i> Добавить фильтр
@@ -26,13 +43,18 @@
             </div>
         </div>
 
-        <div class="cases-grid" id="casesContainer"></div>
+        
+        <div class="cases-grid" id="casesContainer">
+            
+        </div>
 
+       
         <div class="info-block">
             <p><i class="fas fa-lightbulb"></i> Используйте фильтры для поиска подходящих кейсов по вашему направлению и задачам.</p>
         </div>
     </main>
 
+ 
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
@@ -46,6 +68,7 @@
         </div>
     </footer>
 
+    
     <div id="filterModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,39 +104,40 @@
                 </div>
 
                 <div class="filter-section">
-    <h3><i class="fas fa-ruler"></i> Метрики</h3>
-    <div class="filter-options metrics-grid">
-        <label><input type="checkbox" name="metrics" value="Search Lift"> Search Lift</label>
-        <label><input type="checkbox" name="metrics" value="Visit Lift"> Visit Lift</label>
-        <label><input type="checkbox" name="metrics" value="Target Lift Reach"> Target Lift Reach</label>
-        <label><input type="checkbox" name="metrics" value="Impressions"> Impressions</label>
-        <label><input type="checkbox" name="metrics" value="Brand Recall"> Brand Recall</label>
-        <label><input type="checkbox" name="metrics" value="CPM"> CPM</label>
-        <label><input type="checkbox" name="metrics" value="Frequency"> Frequency</label>
-        <label><input type="checkbox" name="metrics" value="CTR"> CTR</label>
-        <label><input type="checkbox" name="metrics" value="Video Views"> Video Views</label>
-        <label><input type="checkbox" name="metrics" value="Website Visitors"> Website Visitors</label>
-        <label><input type="checkbox" name="metrics" value="MQL"> MQL</label>
-        <label><input type="checkbox" name="metrics" value="Time to Response"> Time to Response</label>
-        <label><input type="checkbox" name="metrics" value="CPL"> CPL</label>
-        <label><input type="checkbox" name="metrics" value="Lead-to-Customer Rate"> Lead-to-Customer Rate</label>
-        <label><input type="checkbox" name="metrics" value="Win Rate"> Win Rate</label>
-        <label><input type="checkbox" name="metrics" value="Sales Cycle"> Sales Cycle</label>
-        <label><input type="checkbox" name="metrics" value="Average Deal Size"> Average Deal Size</label>
-        <label><input type="checkbox" name="metrics" value="SQL"> SQL</label>
-        <label><input type="checkbox" name="metrics" value="NPS"> NPS</label>
-        <label><input type="checkbox" name="metrics" value="Customer Retention Rate"> Customer Retention Rate</label>
-        <label><input type="checkbox" name="metrics" value="LTV"> LTV</label>
-        <label><input type="checkbox" name="metrics" value="Repeat Purchase Rate"> Repeat Purchase Rate</label>
-        <label><input type="checkbox" name="metrics" value="Revenue Growth"> Revenue Growth</label>
-        <label><input type="checkbox" name="metrics" value="Profit Growth"> Profit Growth</label>
-        <label><input type="checkbox" name="metrics" value="ROI/ROMI"> ROI/ROMI</label>
-        <label><input type="checkbox" name="metrics" value="Cost Reduction"> Cost Reduction</label>
-        <label><input type="checkbox" name="metrics" value="Implementation Complexity"> Implementation Complexity</label>
-        <label><input type="checkbox" name="metrics" value="Process Automation Level"> Process Automation Level</label>
-        <label><input type="checkbox" name="metrics" value="Integration Scope"> Integration Scope</label>
-    </div>
-</div>
+                    <h3><i class="fas fa-ruler"></i> Метрики</h3>
+                    <div class="filter-options metrics-grid">
+                        <label><input type="checkbox" name="metrics" value="MQL"> MQL</label>
+                        <label><input type="checkbox" name="metrics" value="Brand Recall"> Brand Recall</label>
+                        <label><input type="checkbox" name="metrics" value="SQL"> SQL</label>
+                        <label><input type="checkbox" name="metrics" value="CPM"> CPM</label>
+                        <label><input type="checkbox" name="metrics" value="CTR"> CTR</label>
+                        <label><input type="checkbox" name="metrics" value="CPL"> CPL</label>
+                        <label><input type="checkbox" name="metrics" value="LTV"> LTV</label>
+                        <label><input type="checkbox" name="metrics" value="NPS"> NPS</label>
+                        <label><input type="checkbox" name="metrics" value="Search Lift"> Search Lift</label>
+                        <label><input type="checkbox" name="metrics" value="Visit Lift"> Visit Lift</label>
+                        <label><input type="checkbox" name="metrics" value="Reach"> Reach</label>
+                        <label><input type="checkbox" name="metrics" value="Target Lift Reach"> Target Lift Reach</label>
+                        <label><input type="checkbox" name="metrics" value="Impressions"> Impressions</label>
+                        <label><input type="checkbox" name="metrics" value="Frequency"> Frequency</label>
+                        <label><input type="checkbox" name="metrics" value="Video Views"> Video Views</label>
+                        <label><input type="checkbox" name="metrics" value="Website Visitors"> Website Visitors</label>
+                        <label><input type="checkbox" name="metrics" value="Time to Response"> Time to Response</label>
+                        <label><input type="checkbox" name="metrics" value="Lead-to-Customer Rate"> Lead-to-Customer Rate</label>
+                        <label><input type="checkbox" name="metrics" value="Win Rate"> Win Rate</label>
+                        <label><input type="checkbox" name="metrics" value="Sales Cycle"> Sales Cycle</label>
+                        <label><input type="checkbox" name="metrics" value="Average Deal Size"> Average Deal Size</label>
+                        <label><input type="checkbox" name="metrics" value="Customer Retention Rate"> Customer Retention Rate</label>
+                        <label><input type="checkbox" name="metrics" value="Repeat Purchase Rate"> Repeat Purchase Rate</label>
+                        <label><input type="checkbox" name="metrics" value="Revenue Growth"> Revenue Growth</label>
+                        <label><input type="checkbox" name="metrics" value="Profit Growth"> Profit Growth</label>
+                        <label><input type="checkbox" name="metrics" value="ROI/ROMI"> ROI/ROMI</label>
+                        <label><input type="checkbox" name="metrics" value="Cost Reduction"> Cost Reduction</label>
+                        <label><input type="checkbox" name="metrics" value="Implementation Complexity"> Implementation Complexity</label>
+                        <label><input type="checkbox" name="metrics" value="Process Automation Level"> Process Automation Level</label>
+                        <label><input type="checkbox" name="metrics" value="Integration Scope"> Integration Scope</label>
+                    </div>
+                </div>
             </div>
 
             <div class="modal-actions">
@@ -123,8 +147,8 @@
         </div>
     </div>
 
+  
     <script src="cases.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-
