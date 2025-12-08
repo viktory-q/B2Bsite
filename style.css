@@ -24,13 +24,37 @@ body {
     margin-bottom: 2rem;
 }
 
-.header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+.header-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.logo-container {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.logo-container svg {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.header-logo h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
 }
 
 .subtitle {
@@ -608,8 +632,12 @@ body {
 }
 
 @media (max-width: 768px) {
-    .header h1 {
+    .header-logo h1 {
         font-size: 2rem;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
     }
     
     .cases-grid {
@@ -648,8 +676,12 @@ body {
 }
 
 @media (max-width: 480px) {
-    .header h1 {
+    .header-logo h1 {
         font-size: 1.75rem;
+    }
+    
+    .logo-text {
+        font-size: 1.3rem;
     }
     
     .filter-options {
