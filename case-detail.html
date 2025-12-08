@@ -41,335 +41,189 @@
 
     <script src="cases.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const caseDetail = document.getElementById('caseDetail');
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const caseId = parseInt(urlParams.get('id'));
-        
-        const caseItem = caseStudies.find(c => c.id === caseId);
-        
-        if (!caseItem) {
+        const metricDefinitions = {
+            "MQL": "Marketing Qualified Lead - лид, который соответствует критериям маркетинга",
+            "Brand Recall": "Способность потребителей вспомнить бренд без подсказок",
+            "SQL": "Sales Qualified Lead - лид, готовый к продажам",
+            "Win Rate": "Процент выигранных сделок от общего числа",
+            "Sales Cycle": "Время от первого контакта до закрытия сделки",
+            "Average Deal Size": "Средний размер сделки",
+            "NPS": "Net Promoter Score - индекс лояльности клиентов",
+            "Customer Retention Rate": "Процент удержанных клиентов",
+            "CPM": "Cost Per Mille - стоимость 1000 показов",
+            "CTR": "Click-Through Rate - процент кликов",
+            "CPL": "Cost Per Lead - стоимость лида",
+            "LTV": "Lifetime Value - пожизненная ценность клиента",
+            "Search Lift": "Рост поисковых запросов по бренду",
+            "Visit Lift": "Рост посещаемости сайта",
+            "Target Lift Reach": "Охват целевой аудитории",
+            "Impressions": "Количество показов рекламы",
+            "Frequency": "Средняя частота показов на пользователя",
+            "Video Views": "Количество просмотров видео",
+            "Website Visitors": "Посетители веб-сайта",
+            "Time to Response": "Время ответа на заявку",
+            "Lead-to-Customer Rate": "Конверсия лидов в клиентов",
+            "Repeat Purchase Rate": "Процент повторных покупок",
+            "Revenue Growth": "Рост выручки",
+            "Profit Growth": "Рост прибыли",
+            "ROI/ROMI": "Return on Investment/Marketing Investment",
+            "Cost Reduction": "Сокращение затрат",
+            "Implementation Complexity": "Сложность внедрения",
+            "Process Automation Level": "Уровень автоматизации процессов",
+            "Integration Scope": "Объем интеграций",
+            "Reach": "Охват аудитории"
+        };
+
+        let tooltip = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const caseDetail = document.getElementById('caseDetail');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const caseId = parseInt(urlParams.get('id'));
+            
+            const caseItem = caseStudies.find(c => c.id === caseId);
+            
+            if (!caseItem) {
+                caseDetail.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h2>Кейс не найден</h2>
+                        <p>Запрошенный кейс не существует.</p>
+                        <a href="index.html" class="btn-primary">Вернуться к списку кейсов</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let complexityClass = 'complexity-medium';
+            if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
+            if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
+            
+            const metricsHTML = caseItem.metrics.map(metric => 
+                `<span class="metric-tag" data-metric="${metric}">${metric}</span>`
+            ).join('');
+            
+            let resultsHTML = '';
+            for (const [key, value] of Object.entries(caseItem.results)) {
+                let label = key;
+                switch(key) {
+                    case 'mql': label = 'MQL (Marketing Qualified Lead)'; break;
+                    case 'brandRecall': label = 'Узнаваемость бренда'; break;
+                    case 'sql': label = 'SQL (Sales Qualified Lead)'; break;
+                    case 'winRate': label = 'Win Rate'; break;
+                    case 'salesCycle': label = 'Цикл продаж'; break;
+                    case 'profit': label = 'Рост прибыли'; break;
+                    case 'brandAwareness': label = 'Осведомленность о бренде'; break;
+                    case 'ctr': label = 'CTR'; break;
+                    case 'ltv': label = 'LTV'; break;
+                    case 'nps': label = 'NPS'; break;
+                    case 'searchTraffic': label = 'Поисковый трафик'; break;
+                    case 'conversions': label = 'Конверсии'; break;
+                    case 'cpl': label = 'CPL'; break;
+                    case 'roi': label = 'ROI'; break;
+                    case 'leads': label = 'Заявки'; break;
+                    case 'reach': label = 'Охват'; break;
+                }
+                
+                let icon = 'fas fa-chart-line';
+                if (value.toString().includes('+')) icon = 'fas fa-arrow-up';
+                if (value.toString().includes('-')) icon = 'fas fa-arrow-down';
+                
+                resultsHTML += `
+                    <div class="result-item">
+                        <i class="${icon}"></i>
+                        <div>
+                            <strong>${label}</strong>
+                            <span class="result-value">${value}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
             caseDetail.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h2>Кейс не найден</h2>
-                    <p>Запрошенный кейс не существует.</p>
-                    <a href="index.html" class="btn-primary">Вернуться к списку кейсов</a>
+                <div class="case-header">
+                    <h2>${caseItem.title}</h2>
+                    <div class="case-meta">
+                        <span class="company-badge">${caseItem.company}</span>
+                        <span class="complexity-badge ${complexityClass}">${caseItem.complexity}</span>
+                        <span class="result-badge">${caseItem.result}</span>
+                    </div>
+                </div>
+                
+                <div class="case-content">
+                    <div class="case-section">
+                        <h3><i class="fas fa-info-circle"></i> О проекте</h3>
+                        <p>${caseItem.fullDescription}</p>
+                    </div>
+                    
+                    <div class="case-section">
+                        <h3><i class="fas fa-tags"></i> Направление деятельности</h3>
+                        <div class="tags">
+                            <span class="industry-tag">${caseItem.industry[0]}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-section">
+                        <h3><i class="fas fa-ruler"></i> Отслеживаемые метрики</h3>
+                        <div class="metrics-tags">
+                            ${metricsHTML}
+                        </div>
+                    </div>
+                    
+                    ${resultsHTML ? `
+                    <div class="case-section">
+                        <h3><i class="fas fa-trophy"></i> Достигнутые результаты</h3>
+                        <div class="results-grid">
+                            ${resultsHTML}
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
             `;
-            return;
-        }
-        
-        let complexityClass = 'complexity-medium';
-        if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
-        if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
-        
-        const metricsHTML = caseItem.metrics.map(metric => 
-            `<span class="metric-tag" data-metric="${metric}">${metric}</span>`
-        ).join('');
-        
-        let resultsHTML = '';
-        for (const [key, value] of Object.entries(caseItem.results)) {
-            let label = key;
-            switch(key) {
-                case 'mql': label = 'MQL (Marketing Qualified Lead)'; break;
-                case 'brandRecall': label = 'Узнаваемость бренда'; break;
-                case 'sql': label = 'SQL (Sales Qualified Lead)'; break;
-                case 'winRate': label = 'Win Rate'; break;
-                case 'salesCycle': label = 'Цикл продаж'; break;
-                case 'profit': label = 'Рост прибыли'; break;
-                case 'brandAwareness': label = 'Осведомленность о бренде'; break;
-                case 'ctr': label = 'CTR'; break;
-                case 'ltv': label = 'LTV'; break;
-                case 'nps': label = 'NPS'; break;
-                case 'searchTraffic': label = 'Поисковый трафик'; break;
-                case 'conversions': label = 'Конверсии'; break;
-                case 'cpl': label = 'CPL'; break;
-                case 'roi': label = 'ROI'; break;
-                case 'leads': label = 'Заявки'; break;
-                case 'reach': label = 'Охват'; break;
-            }
             
-            let icon = 'fas fa-chart-line';
-            if (value.toString().includes('+')) icon = 'fas fa-arrow-up';
-            if (value.toString().includes('-')) icon = 'fas fa-arrow-down';
-            
-            resultsHTML += `
-                <div class="result-item">
-                    <i class="${icon}"></i>
-                    <div>
-                        <strong>${label}</strong>
-                        <span class="result-value">${value}</span>
-                    </div>
-                </div>
-            `;
-        }
-        
-        caseDetail.innerHTML = `
-            <div class="case-header">
-                <h2>${caseItem.title}</h2>
-                <div class="case-meta">
-                    <span class="company-badge">${caseItem.company}</span>
-                    <span class="complexity-badge ${complexityClass}">${caseItem.complexity}</span>
-                    <span class="result-badge">${caseItem.result}</span>
-                </div>
-            </div>
-            
-            <div class="case-content">
-                <div class="case-section">
-                    <h3><i class="fas fa-info-circle"></i> О проекте</h3>
-                    <p>${caseItem.fullDescription}</p>
-                </div>
-                
-                <div class="case-section">
-                    <h3><i class="fas fa-tags"></i> Направление деятельности</h3>
-                    <div class="tags">
-                        <span class="industry-tag">${caseItem.industry[0]}</span>
-                    </div>
-                </div>
-                
-                <div class="case-section">
-                    <h3><i class="fas fa-ruler"></i> Отслеживаемые метрики</h3>
-                    <div class="metrics-tags">
-                        ${metricsHTML}
-                    </div>
-                </div>
-                
-                ${resultsHTML ? `
-                <div class="case-section">
-                    <h3><i class="fas fa-trophy"></i> Достигнутые результаты</h3>
-                    <div class="results-grid">
-                        ${resultsHTML}
-                    </div>
-                </div>
-                ` : ''}
-            </div>
-        `;
-        
-        addMetricTooltipsToDetail();
-        
-        const detailStyles = document.createElement('style');
-        detailStyles.textContent = `
-            .back-button {
-                margin-bottom: 2rem;
-            }
-            
-            .case-detail {
-                background: white;
-                border-radius: 12px;
-                padding: 2rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            }
-            
-            .case-header {
-                margin-bottom: 2rem;
-                padding-bottom: 1.5rem;
-                border-bottom: 2px solid #e2e8f0;
-            }
-            
-            .case-header h2 {
-                font-size: 1.75rem;
-                color: #1e293b;
-                margin-bottom: 1rem;
-            }
-            
-            .case-meta {
-                display: flex;
-                gap: 1rem;
-                flex-wrap: wrap;
-                align-items: center;
-            }
-            
-            .company-badge {
-                background: #dbeafe;
-                color: #1e40af;
-                padding: 0.5rem 1rem;
-                border-radius: 6px;
-                font-weight: 600;
-            }
-            
-            .result-badge {
-                background: #dcfce7;
-                color: #166534;
-                padding: 0.5rem 1rem;
-                border-radius: 6px;
-                font-weight: 600;
-            }
-            
-            .case-section {
-                margin-bottom: 2rem;
-            }
-            
-            .case-section:last-child {
-                margin-bottom: 0;
-            }
-            
-            .case-section h3 {
-                font-size: 1.25rem;
-                color: #334155;
-                margin-bottom: 1rem;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            
-            .tags {
-                display: flex;
-                gap: 0.5rem;
-            }
-            
-            .industry-tag {
-                background: #f0f9ff;
-                color: #0369a1;
-                padding: 0.5rem 1rem;
-                border-radius: 6px;
-                font-weight: 500;
-            }
-            
-            .results-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1rem;
-            }
-            
-            .result-item {
-                background: #f8fafc;
-                padding: 1rem;
-                border-radius: 8px;
-                border-left: 4px solid #3b82f6;
-                display: flex;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .result-item i {
-                color: #3b82f6;
-                font-size: 1.25rem;
-                margin-top: 0.25rem;
-            }
-            
-            .result-value {
-                display: block;
-                font-size: 1.5rem;
-                font-weight: 700;
-                color: #1e293b;
-                margin-top: 0.25rem;
-            }
-            
-            .error-message {
-                text-align: center;
-                padding: 4rem 2rem;
-            }
-            
-            .error-message i {
-                font-size: 3rem;
-                color: #f59e0b;
-                margin-bottom: 1rem;
-            }
-            
-            .error-message h2 {
-                color: #475569;
-                margin-bottom: 0.5rem;
-            }
-            
-            .error-message p {
-                color: #64748b;
-                margin-bottom: 2rem;
-            }
-            
-            @media (max-width: 768px) {
-                .case-detail {
-                    padding: 1.5rem;
-                }
-                
-                .results-grid {
-                    grid-template-columns: 1fr;
-                }
-                
-                .case-header h2 {
-                    font-size: 1.5rem;
-                }
-            }
-        `;
-        document.head.appendChild(detailStyles);
-    });
-    
-    const metricDefinitions = {
-        "MQL": "Marketing Qualified Lead - лид, который соответствует критериям маркетинга",
-        "Brand Recall": "Способность потребителей вспомнить бренд без подсказок",
-        "SQL": "Sales Qualified Lead - лид, готовый к продажам",
-        "Win Rate": "Процент выигранных сделок от общего числа",
-        "Sales Cycle": "Время от первого контакта до закрытия сделки",
-        "Average Deal Size": "Средний размер сделки",
-        "NPS": "Net Promoter Score - индекс лояльности клиентов",
-        "Customer Retention Rate": "Процент удержанных клиентов",
-        "CPM": "Cost Per Mille - стоимость 1000 показов",
-        "CTR": "Click-Through Rate - процент кликов",
-        "CPL": "Cost Per Lead - стоимость лида",
-        "LTV": "Lifetime Value - пожизненная ценность клиента",
-        "Search Lift": "Рост поисковых запросов по бренду",
-        "Visit Lift": "Рост посещаемости сайта",
-        "Target Lift Reach": "Охват целевой аудитории",
-        "Impressions": "Количество показов рекламы",
-        "Frequency": "Средняя частота показов на пользователя",
-        "Video Views": "Количество просмотров видео",
-        "Website Visitors": "Посетители веб-сайта",
-        "Time to Response": "Время ответа на заявку",
-        "Lead-to-Customer Rate": "Конверсия лидов в клиентов",
-        "Repeat Purchase Rate": "Процент повторных покупок",
-        "Revenue Growth": "Рост выручки",
-        "Profit Growth": "Рост прибыли",
-        "ROI/ROMI": "Return on Investment/Marketing Investment",
-        "Cost Reduction": "Сокращение затрат",
-        "Implementation Complexity": "Сложность внедрения",
-        "Process Automation Level": "Уровень автоматизации процессов",
-        "Integration Scope": "Объем интеграций",
-        "Reach": "Охват аудитории"
-    };
-    
-    let tooltip = null;
-    
-    function showTooltip(element, text) {
-        hideTooltip();
-        
-        tooltip = document.createElement('div');
-        tooltip.className = 'metric-tooltip';
-        tooltip.textContent = text;
-        
-        document.body.appendChild(tooltip);
-        
-        const rect = element.getBoundingClientRect();
-        tooltip.style.left = `${rect.left + window.scrollX}px`;
-        tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
-    }
-    
-    function hideTooltip() {
-        if (tooltip) {
-            tooltip.remove();
-            tooltip = null;
-        }
-    }
-    
-    function addMetricTooltipsToDetail() {
-        const metricTags = document.querySelectorAll('.metric-tag');
-        
-        metricTags.forEach(tag => {
-            const metric = tag.textContent.trim();
-            const definition = metricDefinitions[metric];
-            
-            if (definition) {
-                tag.addEventListener('mouseenter', (e) => {
-                    showTooltip(e.target, definition);
-                });
-                
-                tag.addEventListener('mouseleave', () => {
-                    hideTooltip();
-                });
-            }
+            addMetricTooltipsToDetail();
         });
-    }
-</script>
+        
+        function addMetricTooltipsToDetail() {
+            const metricTags = document.querySelectorAll('.metric-tag');
+            
+            metricTags.forEach(tag => {
+                const metric = tag.getAttribute('data-metric');
+                const definition = metricDefinitions[metric];
+                
+                if (definition) {
+                    tag.addEventListener('mouseenter', (e) => {
+                        showTooltip(e.target, definition);
+                    });
+                    
+                    tag.addEventListener('mouseleave', () => {
+                        hideTooltip();
+                    });
+                }
+            });
+        }
+        
+        function showTooltip(element, text) {
+            hideTooltip();
+            
+            tooltip = document.createElement('div');
+            tooltip.className = 'metric-tooltip';
+            tooltip.textContent = text;
+            
+            document.body.appendChild(tooltip);
+            
+            const rect = element.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + window.scrollX}px`;
+            tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+        }
+        
+        function hideTooltip() {
+            if (tooltip) {
+                tooltip.remove();
+                tooltip = null;
+            }
+        }
+    </script>
 </body>
 </html>
-
