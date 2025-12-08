@@ -115,43 +115,90 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    function createCaseCard(caseItem) {
-        const card = document.createElement('div');
-        card.className = 'case-card';
-        
-        let complexityClass = 'complexity-medium';
-        if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
-        if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
-        
-        const metricsHTML = caseItem.metrics.map(metric => 
-            `<span class="metric-tag">${metric}</span>`
-        ).join('');
-        
-        card.innerHTML = `
-            <h3>${caseItem.title}</h3>
-            <p><strong>Компания:</strong> ${caseItem.company}</p>
-            <p><strong>Направление:</strong> ${caseItem.industry.join(', ')}</p>
-            <div>
-                <strong>Метрики:</strong>
-                <div class="metrics-tags">${metricsHTML}</div>
-            </div>
-            <p><strong>Результат:</strong> ${caseItem.result}</p>
-            <p><strong>Сложность:</strong> 
-                <span class="complexity-badge ${complexityClass}">${caseItem.complexity}</span>
-            </p>
-            <p style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-                <strong>Описание:</strong> ${caseItem.shortDescription}
-            </p>
-        `;
-        
-        card.addEventListener('click', () => {
+   function createCaseCard(caseItem) {
+    const card = document.createElement('div');
+    card.className = 'case-card';
+    
+    let complexityClass = 'complexity-medium';
+    if (caseItem.complexity === 'Низкая') complexityClass = 'complexity-low';
+    if (caseItem.complexity === 'Сложная') complexityClass = 'complexity-high';
+    
+    const metricsHTML = caseItem.metrics.map(metric => 
+        `<span class="metric-tag" data-metric="${metric}" title="${metricDefinitions[metric] || metric}">${metric}</span>`
+    ).join('');
+    
+    card.innerHTML = `
+        <h3>${caseItem.title}</h3>
+        <p><strong>Компания:</strong> ${caseItem.company}</p>
+        <p><strong>Направление:</strong> ${caseItem.industry.join(', ')}</p>
+        <div>
+            <strong>Метрики:</strong>
+            <div class="metrics-tags">${metricsHTML}</div>
+        </div>
+        <p><strong>Результат:</strong> ${caseItem.result}</p>
+        <p><strong>Сложность:</strong> 
+            <span class="complexity-badge ${complexityClass}">${caseItem.complexity}</span>
+        </p>
+        <p style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+            <strong>Описание:</strong> ${caseItem.shortDescription}
+        </p>
+    `;
+    
+    card.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('metric-tag')) {
             window.location.href = `case-detail.html?id=${caseItem.id}`;
-        });
+        }
+    });
+    
+    addMetricTooltips(card);
+    
+    return card;
+}
+
+function addMetricTooltips(element) {
+    const metricTags = element.querySelectorAll('.metric-tag');
+    
+    metricTags.forEach(tag => {
+        const metric = tag.getAttribute('data-metric');
+        const definition = metricDefinitions[metric];
         
-        return card;
+        if (definition) {
+            tag.addEventListener('mouseenter', (e) => {
+                showTooltip(e.target, definition);
+            });
+            
+            tag.addEventListener('mouseleave', () => {
+                hideTooltip();
+            });
+        }
+    });
+}
+
+let tooltip = null;
+
+function showTooltip(element, text) {
+    hideTooltip();
+    
+    tooltip = document.createElement('div');
+    tooltip.className = 'metric-tooltip';
+    tooltip.textContent = text;
+    
+    document.body.appendChild(tooltip);
+    
+    const rect = element.getBoundingClientRect();
+    tooltip.style.left = `${rect.left + window.scrollX}px`;
+    tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+}
+
+function hideTooltip() {
+    if (tooltip) {
+        tooltip.remove();
+        tooltip = null;
     }
+}
     
     function updateCasesCount(count) {
         casesCount.textContent = `Найдено кейсов: ${count}`;
     }
 });
+
