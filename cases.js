@@ -70,3 +70,35 @@ const caseStudies = [
         }
     }
 ];
+const metricDefinitions = {
+    "MQL": "Marketing Qualified Lead - лид, который соответствует критериям маркетинга",
+    "Brand Recall": "Способность потребителей вспомнить бренд без подсказок",
+    "SQL": "Sales Qualified Lead - лид, готовый к продажам",
+    "Win Rate": "Процент выигранных сделок от общего числа",
+    "Sales Cycle": "Время от первого контакта до закрытия сделки",
+    "Average Deal Size": "Средний размер сделки",
+    "NPS": "Net Promoter Score - индекс лояльности клиентов",
+    "Customer Retention Rate": "Процент удержанных клиентов",
+    "CPM": "Cost Per Mille - стоимость 1000 показов",
+    "CTR": "Click-Through Rate - процент кликов",
+    "CPL": "Cost Per Lead - стоимость лида",
+    "LTV": "Lifetime Value - пожизненная ценность клиента",
+    "Search Lift": "Рост поисковых запросов по бренду",
+    "Visit Lift": "Рост посещаемости сайта",
+    "Target Lift Reach": "Охват целевой аудитории",
+    "Impressions": "Количество показов рекламы",
+    "Frequency": "Средняя частота показов на пользователя",
+    "Video Views": "Количество просмотров видео",
+    "Website Visitors": "Посетители веб-сайта",
+    "Time to Response": "Время ответа на заявку",
+    "Lead-to-Customer Rate": "Конверсия лидов в клиентов",
+    "Repeat Purchase Rate": "Процент повторных покупок",
+    "Revenue Growth": "Рост выручки",
+    "Profit Growth": "Рост прибыли",
+    "ROI/ROMI": "Return on Investment/Marketing Investment",
+    "Cost Reduction": "Сокращение затрат",
+    "Implementation Complexity": "Сложность внедрения",
+    "Process Automation Level": "Уровень автоматизации процессов",
+    "Integration Scope": "Объем интеграций",
+    "Reach": "Охват аудитории"
+};
