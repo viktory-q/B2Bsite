@@ -95,6 +95,7 @@ body {
     flex-direction: column;
     gap: 0.75rem;
     cursor: pointer;
+    position: relative;
 }
 
 .case-card:hover {
@@ -161,6 +162,48 @@ body {
     border-radius: 4px;
     font-size: 0.75rem;
     font-weight: 500;
+    cursor: help;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.metric-tag:hover {
+    background: #e2e8f0;
+}
+
+.metric-tooltip {
+    position: absolute;
+    background: #1e293b;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    max-width: 250px;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s ease;
+}
+
+.metric-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #1e293b;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .info-block {
@@ -342,8 +385,39 @@ body {
 
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.metrics-grid label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 6px;
+    cursor: help;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+}
+
+.metrics-grid label:hover {
+    background: #f1f5f9;
+    border-color: #3b82f6;
+}
+
+.metrics-grid input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #3b82f6;
 }
 
 .modal-actions {
@@ -406,6 +480,133 @@ body {
     color: #64748b;
 }
 
+.back-button {
+    margin-bottom: 2rem;
+}
+
+.case-detail {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.case-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.case-header h2 {
+    font-size: 1.75rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.case-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.company-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.result-badge {
+    background: #dcfce7;
+    color: #166534;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.case-section {
+    margin-bottom: 2rem;
+}
+
+.case-section:last-child {
+    margin-bottom: 0;
+}
+
+.case-section h3 {
+    font-size: 1.25rem;
+    color: #334155;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.industry-tag {
+    background: #f0f9ff;
+    color: #0369a1;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.result-item {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.result-item i {
+    color: #3b82f6;
+    font-size: 1.25rem;
+    margin-top: 0.25rem;
+}
+
+.result-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0.25rem;
+}
+
+.error-message {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.error-message i {
+    font-size: 3rem;
+    color: #f59e0b;
+    margin-bottom: 1rem;
+}
+
+.error-message h2 {
+    color: #475569;
+    margin-bottom: 0.5rem;
+}
+
+.error-message p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
 @media (max-width: 768px) {
     .header h1 {
         font-size: 2rem;
@@ -432,6 +633,18 @@ body {
     .metrics-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
+    
+    .case-detail {
+        padding: 1.5rem;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-header h2 {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -447,58 +660,3 @@ body {
         grid-template-columns: 1fr;
     }
 }
-.metric-tag {
-    background: #f1f5f9;
-    color: #475569;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: help;
-    position: relative;
-    transition: background-color 0.2s;
-}
-
-.metric-tag:hover {
-    background: #e2e8f0;
-}
-
-.metric-tooltip {
-    position: absolute;
-    background: #1e293b;
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    max-width: 250px;
-    z-index: 10000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    pointer-events: none;
-    animation: tooltipFadeIn 0.2s ease;
-}
-
-.metric-tooltip::before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 10px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid #1e293b;
-}
-
-@keyframes tooltipFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.case-card {
-    position: relative;
-}
-
