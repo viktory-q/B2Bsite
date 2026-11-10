@@ -11,7 +11,7 @@ const metricDefinitions = {
     "CTR": "Click-Through Rate - процент кликов",
     "CPL": "Cost Per Lead - стоимость лида",
     "LTV": "Lifetime Value - пожизненная ценность клиента",
-    "Search Lift": "Рост поисковых запросов по бренду",
+    "Search Lift": "Рост запросов по бренду",
     "Visit Lift": "Рост посещаемости сайта",
     "Target Lift Reach": "Охват целевой аудитории",
     "Impressions": "Количество показов рекламы",
